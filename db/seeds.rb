@@ -17,7 +17,8 @@ end
 
 # # #Creation des appointments
 10.times do
-	Appointment.create(date: Faker::Date.forward(23), doctor_id: Doctor.all.sample.id, patient_id: Patient.all.sample.id, city_id: City.all.sample.id)
+	docto = Doctor.all.sample
+	Appointment.create(date: Faker::Date.forward(23), doctor_id: docto.id, patient_id: Patient.where(city_id: docto.city_id), city_id: docto.city_id)
 end
 
 # # #Création des spécialités 
@@ -27,5 +28,5 @@ end
 
 # # #Alimentation du tableau join Docteurs-Specialités
 10.times do |i|
-	Doctor.find(i = rand(1..5)).specialities << Speciality.find(i = rand(1..5))
+	Doctor.find(i = rand(1..10)).specialities << Speciality.find(i = rand(1..5))
 end
